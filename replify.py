@@ -11,10 +11,11 @@ class REPLify:
             # evaluate the input in the namespace
             input_data = eval(input_text, self.namespace)
             # do some computation here...
-            output_data = {"result": input_data, "count": self.count}
+            output_data = {"data": input_data, "info": {"count": self.count}}
         except Exception as e:
             # if there was an error, return an error message
             output_data = {"error": str(e)}
+
         # convert the output to JSON and print it
         output_text = json.dumps(output_data)
         print(output_text)
