@@ -1,6 +1,10 @@
 import json
 
 
+def test(x=2):
+    return "Working Fine" * x
+
+
 class REPLify:
     def __init__(self, namespace=None):
         self.count = 0
