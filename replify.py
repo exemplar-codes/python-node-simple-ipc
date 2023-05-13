@@ -1,7 +1,5 @@
 import json
 
-def test_repl (x=3):
-    return x * 3
 
 class REPLify:
     def __init__(self, namespace=None):
@@ -29,6 +27,7 @@ class REPLify:
             if not input_text:
                 break
             self.process_input(input_text)
+
 
 if __name__ == "__main__":
     REPLify().start_listening()
