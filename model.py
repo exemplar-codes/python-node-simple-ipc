@@ -1,5 +1,7 @@
 import json
 
+count = 0
+
 def doSomething(x = 2):
     return x * 2
 
@@ -19,6 +21,7 @@ def process_input(input_text):
 # read input from stdin, process it, and write output to stdout
 while True:
     input_text = input().strip()
+    count+=1
     if not input_text:
         break
     process_input(input_text)
