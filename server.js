@@ -1,36 +1,34 @@
-const { spawn } = require('child_process');
+const readline = require("readline");
+const { spawn } = require("child_process");
 
-function runPythonScript(filename) {
-  return new Promise((resolve, reject) => {
-    const pythonProcess = spawn('python', ['model.py']);
+// Create a readline interface to read input from the console
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-    // Write filename to Python process's standard input
-    pythonProcess.stdin.write(`${filename}\n`);
+// Spawn a child process to run the Python script as a module
+const pythonProcess = spawn("python", ["-m", "model"]);
 
-    // Read JSON response from Python process's standard output
-    let data = '';
-    pythonProcess.stdout.on('data', (chunk) => {
-      data += chunk.toString();
-    });
+// Handle input from the console
+rl.on("line", (input) => {
+  // Send the input to the Python process's standard input
+  pythonProcess.stdin.write(`${input}\n`);
+});
 
-    // Handle errors and close events
-    pythonProcess.on('error', reject);
-    pythonProcess.stdout.on('end', () => {
-      try {
-        const response = JSON.parse(data);
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  });
-}
+// Handle output from the Python process
+pythonProcess.stdout.on("data", (data) => {
+  // Print the output from the Python process to the console
+  console.log(data.toString());
+});
 
-// Example usage
-runPythonScript('example.txt')
-  .then((response) => {
-    console.log('Received response:', response);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+// Handle errors and close events
+pythonProcess.on("error", (error) => {
+  console.error("Error:", error);
+  process.exit(1);
+});
+
+pythonProcess.on("close", () => {
+  console.log("Python process closed");
+  process.exit(0);
+});
