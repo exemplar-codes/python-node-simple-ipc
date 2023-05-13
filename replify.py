@@ -1,9 +1,9 @@
 import json
 
-def test_repl(x=3):
+def test_repl (x=3):
     return x * 3
 
-class REPLyify:
+class REPLify:
     def __init__(self):
         self.count = 0
 
@@ -30,4 +30,4 @@ class REPLyify:
             self.process_input(input_text)
 
 if __name__ == "__main__":
-    REPLyify().start_listening()
+    REPLify().start_listening()
