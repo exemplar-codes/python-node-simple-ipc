@@ -4,13 +4,14 @@ def test_repl (x=3):
     return x * 3
 
 class REPLify:
-    def __init__(self):
+    def __init__(self, namespace=None):
         self.count = 0
+        self.namespace = namespace if namespace else {}
 
     def process_input(self, input_text):
         try:
-            # evaluate the input as a Python expression
-            input_data = eval(input_text)
+            # evaluate the input in the namespace
+            input_data = eval(input_text, self.namespace)
             # do some computation here...
             output_data = {"result": input_data, "count": self.count}
         except Exception as e:
